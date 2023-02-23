@@ -214,6 +214,7 @@ public class UdonXML : UdonSharpBehaviour
         var state = 0;
         var level = 0;
         var isSpecialData = false;
+        var isWithinCDATA = false;
         var isWithinQuotes = false;
         var isSelfClosingNode = false;
         var hasNodeNameEnded = false;
@@ -246,7 +247,23 @@ public class UdonXML : UdonSharpBehaviour
 
             if (state == 0)
             {
-                if (c == '<')
+                if (
+                    input[i + 0] == '<' &&
+                    input[i + 1] == '!' &&
+                    input[i + 2] == '[' &&
+                    input[i + 3] == 'C' &&
+                    input[i + 4] == 'D' &&
+                    input[i + 5] == 'A' &&
+                    input[i + 6] == 'T' &&
+                    input[i + 7] == 'A' &&
+                    input[i + 8] == '['
+                )
+                {
+                    isWithinCDATA = true;
+                    i += "<![CDATA[".Length - 1;
+                }
+                else if (c == '<' && !isWithinCDATA)
+                {
                 {
                     isSpecialData = false;
                     isWithinQuotes = false;
@@ -258,10 +275,16 @@ public class UdonXML : UdonSharpBehaviour
                     tagValues = new string[0];
                     state = 1;
                 }
+                }
+                else if (isWithinCDATA && c == ']' && input[i + 1] == ']')
+                {
+                    isWithinCDATA = false;
+                    i += 2;
+                }
                 else
                 {
                     object[] s = FindCurrentLevel(data, position);
-                    s[3] = (string) s[3] + c;
+                    s[3] = (string)s[3] + c;
                 }
             }
             else if (state == 1)
