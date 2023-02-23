@@ -26,16 +26,18 @@ using UnityEngine;
 using UdonSharp;
 
 // ReSharper disable once InconsistentNaming
-public class UdonXMLTest : UdonSharpBehaviour
+namespace UdonXMLParser
 {
-    public UdonXML udonXml;
+    public class UdonXMLTest : UdonSharpBehaviour
+    {
+        public UdonXML udonXml;
 
-    private string EXAMPLE_DATA_1 = @"<users>
+        private string EXAMPLE_DATA_1 = @"<users>
     <user name=""John Doe"" age=""42"" />
     <user name=""Jane Doe"" age=""39"" />
 </users>";
 
-    private string EXAMPLE_DATA_2 = @"<?xml version=""1.0"" encoding=""utf-8""?>
+        private string EXAMPLE_DATA_2 = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <books xmlns=""http://www.contoso.com/books"">
     <book genre=""novel"" ISBN=""1-861001-57-8"" publicationdate=""1823-01-28"">
         <title>Pride And Prejudice</title>
@@ -51,7 +53,7 @@ public class UdonXMLTest : UdonSharpBehaviour
     </book>
 </books>";
 
-    private string EXAMPLE_DATA_3 = @"<ManagedTreeData Version=""1"">
+        private string EXAMPLE_DATA_3 = @"<ManagedTreeData Version=""1"">
   <TreeItem Name=""ProjectDefaultConfigurations"">
     <TreeItem Name=""ProjectDefaultConfiguration"">
       <Attribute Name=""ID"" Type=""Primitive"" ValueType=""String"" Value=""8db44480-2f7b-4495-b3dc-10841b6c375a"" />
@@ -557,7 +559,7 @@ public class UdonXMLTest : UdonSharpBehaviour
   </TreeItem>
 </ManagedTreeData>";
 
-    private string EXAMPLE_DATA_4 = @"<!DOCTYPE html>
+        private string EXAMPLE_DATA_4 = @"<!DOCTYPE html>
 <html>
   <body>
     <h1>My First Heading</h1>
@@ -566,7 +568,7 @@ public class UdonXMLTest : UdonSharpBehaviour
 </html>
 ";
 
-    private string EXAMPLE_DATA_5 = @"<?xml version=""1.0"" encoding=""UTF-8""?>
+        private string EXAMPLE_DATA_5 = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"" xmlns:m=""http://schemas.openxmlformats.org/officeDocument/2006/math"" xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006"" xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:r=""http://schemas.openxmlformats.org/officeDocument/2006/relationships"" xmlns:v=""urn:schemas-microsoft-com:vml"" xmlns:w10=""urn:schemas-microsoft-com:office:word"" xmlns:w14=""http://schemas.microsoft.com/office/word/2010/wordml"" xmlns:w15=""http://schemas.microsoft.com/office/word/2012/wordml"" xmlns:wne=""http://schemas.microsoft.com/office/word/2006/wordml"" xmlns:wp=""http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"" xmlns:wp14=""http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"" xmlns:wpc=""http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas"" xmlns:wpg=""http://schemas.microsoft.com/office/word/2010/wordprocessingGroup"" xmlns:wpi=""http://schemas.microsoft.com/office/word/2010/wordprocessingInk"" xmlns:wps=""http://schemas.microsoft.com/office/word/2010/wordprocessingShape"" xmlns:wpsCustomData=""http://www.wps.cn/officeDocument/2013/wpsCustomData"" mc:Ignorable=""w14 w15 wp14"">
    <w:body>
       <w:p>
@@ -595,7 +597,7 @@ public class UdonXMLTest : UdonSharpBehaviour
    </w:body>
 </w:document>";
 
-    private string EXAMPLE_DATA_6 = @"<!doctype html >
+        private string EXAMPLE_DATA_6 = @"<!doctype html >
 <html>
 <head>
     <title>Example Domain</title>
@@ -643,7 +645,7 @@ public class UdonXMLTest : UdonSharpBehaviour
 </html>
 ";
 
-    private string EXAMPLE_DATA_7 = @"<!DOCTYPE html>
+        private string EXAMPLE_DATA_7 = @"<!DOCTYPE html>
 <html lang=""en"">
 	<head>
 		<title>Free Online HTML Formatter - FreeFormatter.com</title>
@@ -1071,34 +1073,35 @@ public class UdonXMLTest : UdonSharpBehaviour
 	</body>
 </html>";
 
-    public void Start()
-    {
-        var root = udonXml.LoadXml(EXAMPLE_DATA_7);
-
-        if (root == null)
+        public void Start()
         {
-            Debug.Log("ROOT WAS NULL!!");
-            return;
-        }
+            var root = udonXml.LoadXml(EXAMPLE_DATA_7);
 
-        /*for (var i1 = 0; i1 != udonXml.GetChildNodesCount(root); i1++)
-        {
-            var level1 = udonXml.GetChildNode(root, i1);
-            Debug.Log("name: " + udonXml.GetNodeName(level1) + " children: " + udonXml.GetChildNodesCount(level1));
-            for (var i2 = 0; i2 != udonXml.GetChildNodesCount(level1); i2++)
+            if (root == null)
             {
-                var level2 = udonXml.GetChildNode(level1, i2);
-                Debug.Log("  name: " + udonXml.GetNodeName(level2) + " children: " +
-                          udonXml.GetChildNodesCount(level2));
-                for (var i3 = 0; i3 != udonXml.GetChildNodesCount(level2); i3++)
-                {
-                    var level3 = udonXml.GetChildNode(level2, i3);
-                    Debug.Log("    name: " + udonXml.GetNodeName(level3) + " children: " +
-                              udonXml.GetChildNodesCount(level3) + " value: " + udonXml.GetNodeValue(level3));
-                }
+                Debug.Log("ROOT WAS NULL!!");
+                return;
             }
-        }*/
 
-        Debug.Log(udonXml.SaveXmlWithIdent(root, "	"));
+            /*for (var i1 = 0; i1 != udonXml.GetChildNodesCount(root); i1++)
+            {
+                var level1 = udonXml.GetChildNode(root, i1);
+                Debug.Log("name: " + udonXml.GetNodeName(level1) + " children: " + udonXml.GetChildNodesCount(level1));
+                for (var i2 = 0; i2 != udonXml.GetChildNodesCount(level1); i2++)
+                {
+                    var level2 = udonXml.GetChildNode(level1, i2);
+                    Debug.Log("  name: " + udonXml.GetNodeName(level2) + " children: " +
+                              udonXml.GetChildNodesCount(level2));
+                    for (var i3 = 0; i3 != udonXml.GetChildNodesCount(level2); i3++)
+                    {
+                        var level3 = udonXml.GetChildNode(level2, i3);
+                        Debug.Log("    name: " + udonXml.GetNodeName(level3) + " children: " +
+                                  udonXml.GetChildNodesCount(level3) + " value: " + udonXml.GetNodeValue(level3));
+                    }
+                }
+            }*/
+
+            Debug.Log(udonXml.SaveXmlWithIdent(root, "	"));
+        }
     }
 }
