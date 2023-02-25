@@ -1,7 +1,7 @@
 {
   "name": "studio.nekomimi.udonxml",
   "displayName": "UdonXML",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "an XML parser. forked from https://github.com/Foorack/UdonXML",
   "repository": {
     "type": "git",
