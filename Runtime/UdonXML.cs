@@ -562,6 +562,13 @@ namespace UdonXMLParser
             return Parse(input.ToCharArray());
         }
 
+        [SerializeField] private GameObject parser;
+        public void LoadXmlCallback(string input, UdonXML_Callback callback, string callbackId)
+        {
+            // (new UdonXML_Parse()).LoadXml(input, callback);
+            Instantiate(parser, this.transform).GetComponent<UdonXML_Parser>().LoadXml(input, callback, callbackId);
+        }
+
         /**
         * Saves the stored XML structure in memory to an XML document.
         * Uses default indent of 4 spaces. Use `SaveXmlWithIdent` to override.
