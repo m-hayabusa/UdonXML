@@ -75,7 +75,7 @@ namespace UdonXMLParser
                 if (updateLoopIttr >= input.Length)
                 {
                     callback.OnUdonXMLParseEnd(data, callbackId);
-                    Destroy(this);
+                    Destroy(this.gameObject);
                 }
             }
         }
