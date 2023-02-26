@@ -69,7 +69,7 @@ namespace UdonXMLParser
             {
                 for (var j = updateLoopIttr; updateLoopIttr < input.Length && updateLoopIttr <= 100 + j; updateLoopIttr++)
                 {
-                    Parse(updateLoopIttr);
+                    updateLoopIttr = Parse(updateLoopIttr);
                 }
 
                 if (updateLoopIttr >= input.Length)
@@ -171,7 +171,7 @@ namespace UdonXMLParser
 
             return current;
         }
-        private void Parse(int i)
+        private int Parse(int i)
         {
             char c = input[i];
             string pos = "";
@@ -370,6 +370,7 @@ namespace UdonXMLParser
                     }
                 }
             }
+            return i;
         }
         /**
         * Loads an XML structure into memory by parsing the provided input.
