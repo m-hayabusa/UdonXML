@@ -65,7 +65,7 @@ namespace UdonXMLParser
 
         [SerializeField] int runPerSec = 8;
         [SerializeField] int charsPerRun = 100;
-        
+
         private float dT = 0;
         void Update()
         {
@@ -84,6 +84,10 @@ namespace UdonXMLParser
                     {
                         callback.OnUdonXMLParseEnd(data, callbackId);
                         Destroy(this.gameObject);
+                    }
+                    else
+                    {
+                        callback.OnUdonXMLIteration(updateLoopIttr, input.Length);
                     }
                 }
             }
