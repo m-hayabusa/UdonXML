@@ -63,19 +63,28 @@ namespace UdonXMLParser
             data[0] = "UdonXMLRoot";
         }
 
+        [SerializeField] int runPerSec = 8;
+        [SerializeField] int charsPerRun = 100;
+        
+        private float dT = 0;
         void Update()
         {
-            if (ready)
+            dT += Time.deltaTime;
+            if (dT > 1.0F / runPerSec)
             {
-                for (var j = updateLoopIttr; updateLoopIttr < input.Length && updateLoopIttr <= 100 + j; updateLoopIttr++)
+                dT = 0;
+                if (ready)
                 {
-                    updateLoopIttr = Parse(updateLoopIttr);
-                }
+                    for (var j = updateLoopIttr; updateLoopIttr < input.Length && updateLoopIttr <= charsPerRun + j; updateLoopIttr++)
+                    {
+                        updateLoopIttr = Parse(updateLoopIttr);
+                    }
 
-                if (updateLoopIttr >= input.Length)
-                {
-                    callback.OnUdonXMLParseEnd(data, callbackId);
-                    Destroy(this.gameObject);
+                    if (updateLoopIttr >= input.Length)
+                    {
+                        callback.OnUdonXMLParseEnd(data, callbackId);
+                        Destroy(this.gameObject);
+                    }
                 }
             }
         }
