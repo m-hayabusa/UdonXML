@@ -34,8 +34,7 @@
  * 
  */
 
-#define NO_DEBUG
-// Remove NO_ to enable debug
+// #define UDONXML_DEBUG
 
 using UnityEngine;
 using UdonSharp;
@@ -243,7 +242,7 @@ namespace UdonXMLParser
                     pos += position[n] + ">";
                 }
 
-#if DEBUG
+#if UDONXML_DEBUG
                 Debug.Log(state + " " + level + " " + c + "   " + pos);
 #endif
 
@@ -314,7 +313,7 @@ namespace UdonXMLParser
                         position = RemoveLastIntegerArray(position);
 
                         state = 0;
-#if DEBUG
+#if UDONXML_DEBUG
                         Debug.Log("CLOSED TAG : " + nodeName);
 #endif
                     }
@@ -327,7 +326,7 @@ namespace UdonXMLParser
                 {
                     if (c == '>' && !isWithinQuotes)
                     {
-#if DEBUG
+#if UDONXML_DEBUG
                         Debug.Log("OPENED TAG : " + nodeName);
 #endif
                         state = 0;
@@ -349,7 +348,7 @@ namespace UdonXMLParser
                         if (isSelfClosingNode || isSpecialData)
                         {
                             position = RemoveLastIntegerArray(position);
-#if DEBUG
+#if UDONXML_DEBUG
                             Debug.Log("SELF-CLOSED TAG : " + nodeName);
 #endif
                         }
@@ -435,7 +434,7 @@ namespace UdonXMLParser
                 }
             }
 
-#if DEBUG
+#if UDONXML_DEBUG
             Debug.Log("Level after parsing: " + level);
 #endif
             return level != 0 ? null : data;
@@ -467,7 +466,7 @@ namespace UdonXMLParser
                 var tagValues = (object[]) nodeTags[1];
                 nodeChildren = (object[]) node[2];
                 var nodeValue = (string) node[3];
-#if DEBUG
+#if UDONXML_DEBUG
                 Debug.Log("[UdonXML] [Save] Work: " + nodeName + " " + level);
 #endif
 
